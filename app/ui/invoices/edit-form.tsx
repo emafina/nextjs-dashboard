@@ -1,4 +1,5 @@
 'use client';
+// not clear why it is a client component. It seems to work also deleting the directive..
 
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
 import {
@@ -10,6 +11,8 @@ import {
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 
+import { updateInvoice } from '@/app/lib/actions';
+
 export default function EditInvoiceForm({
   invoice,
   customers,
@@ -17,8 +20,15 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+
+  // Note: Using a hidden input field in your form also works
+  // (e.g. <input type="hidden" name="id" value={invoice.id} />).
+  // However, the values will appear as full text in the HTML source,
+  // which is not ideal for sensitive data.
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+
   return (
-    <form>
+    <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
