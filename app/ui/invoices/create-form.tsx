@@ -1,3 +1,5 @@
+'use client';
+
 import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -8,14 +10,19 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
 
-import { createInvoice } from '@/app/lib/actions';
+import { createInvoice, State } from '@/app/lib/actions';
+
+import { useActionState } from 'react';
 
 // action in form: in react, behind the scenes this creates a POST api endpoint, which
 // has not to be created manually
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  const initialState: State = {message:null,errors:{}};
+  const [state,formAction] = useActionState(createInvoice,initialState);
+
   return (
-    <form action={createInvoice} >
+    <form action={formAction} >
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
