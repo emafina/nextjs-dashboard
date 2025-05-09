@@ -8,6 +8,12 @@ import { Suspense } from 'react';
 
 import { fetchInvoicesPages } from '@/app/lib/data';
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Invoices'
+};
+
 // on server components search parameters are accessed through prop "searchParams".
 // on client components, they are accessed through react hook useSearchParams
 
